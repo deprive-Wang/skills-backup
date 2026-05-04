@@ -5,6 +5,8 @@
 | Skill | Category | Backup | Source | Notes |
 | --- | --- | --- | --- | --- |
 | `planing-with-file` | custom | yes | local custom | Plan mode 确认后自动写入 `plan.md` |
+| `code-simplifier` | custom | yes | local custom | 代码简化与复杂度收缩 |
+| `codex-project-onboarding` | custom | yes | local custom | 首次打开项目时创建或更新 `codex.md` |
 
 ## Core Skills
 

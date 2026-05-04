@@ -18,7 +18,9 @@ $workflowFiles = @(
 )
 
 $customSkills = @(
-    "planing-with-file"
+    "planing-with-file",
+    "code-simplifier",
+    "codex-project-onboarding"
 )
 
 $coreSkills = @(
