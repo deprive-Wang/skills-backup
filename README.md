@@ -2,14 +2,21 @@
 
 本仓库备份全部 AI 编程助手的 Skill 资产，兼容 **OpenAI Codex** 与 **Anthropic Claude Code** 双平台。每个目录即一个独立 Skill，可在任一平台加载使用。
 
+## 双目录同步
+
+当前 `~/.claude/skills/` 和 `~/.codex/skills/` 是**同一 Git 仓库的两个 clone**，均指向 `origin: github.com/deprive-Wang/codex-skills-backup`。任一处修改后 commit + push，另一处 `git pull` 即可同步。
+
 ## 快速恢复
 
-在新电脑上 clone 后，将整个目录复制到对应平台的 skills 路径：
+在新电脑上：
 
-- **Claude Code**: `~/.claude/skills/`
-- **OpenAI Codex**: `~/.codex/skills/`
+```bash
+# Claude Code
+git clone https://github.com/deprive-Wang/codex-skills-backup.git ~/.claude/skills
 
-或使用 `Skill` 工具逐个加载。
+# OpenAI Codex (同一个仓库)
+git clone https://github.com/deprive-Wang/codex-skills-backup.git ~/.codex/skills
+```
 
 ---
 
