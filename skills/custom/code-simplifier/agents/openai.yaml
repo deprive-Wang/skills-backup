@@ -1,0 +1,4 @@
+interface:
+  display_name: "code simplifier"
+  short_description: "Simplify code while preserving behavior."
+  default_prompt: "Use this skill to simplify existing code, remove unnecessary complexity, and keep changes behavior-preserving and surgical."
