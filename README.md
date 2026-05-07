@@ -73,6 +73,7 @@ git clone https://github.com/deprive-Wang/codex-skills-backup.git ~/.codex/skill
 |-------|------|
 | `minimax-docx` | 专业 DOCX 文档 (OpenXML SDK .NET) |
 | `minimax-pdf` | 专业 PDF 设计排版 |
+| `markitdown` | 多格式文件与 Office 文档转换为 Markdown |
 | `minimax-xlsx` | Excel 电子表格创建与分析 |
 | `pptx-generator` | PowerPoint 演示文稿生成 |
 | `doc` | DOCX 基础读写 |
