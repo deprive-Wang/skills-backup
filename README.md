@@ -57,6 +57,7 @@ git clone https://github.com/deprive-Wang/codex-skills-backup.git ~/.codex/skill
 | `tdd` | TDD (含 deep-modules/interface-design/mocking) |
 | `tdd-mattpocock` | TDD (Matt Pocock 版，含测试反模式) |
 | `webapp-testing` | Playwright Web 应用测试 |
+| `playwright` | Playwright CLI 浏览器自动化 (导航、点击、截图、数据提取、UI 调试) |
 
 ### 📦 Git 工具
 
@@ -80,6 +81,7 @@ git clone https://github.com/deprive-Wang/codex-skills-backup.git ~/.codex/skill
 | `pdf` | PDF 基础读写 |
 | `paperjsx` | JSON→文档 (PPTX/DOCX/XLSX/PDF) |
 | `codex-paperjsx` | PaperJSX (Codex 版本) |
+| `Visiomaster` | Visio 图表重建工作流，将流程图/架构图重绘为可编辑 `.vsdx` 并导出 `.svg/.png` |
 
 ### ✍️ 写作与内容
 
