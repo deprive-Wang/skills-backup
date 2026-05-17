@@ -102,6 +102,7 @@ git clone https://github.com/deprive-Wang/codex-skills-backup.git ~/.codex/skill
 | `brainstorming` | 创意构思与设计探索 |
 | `grill-me` | 方案质询 (追问至全面理解) |
 | `grill-with-docs` | 方案质询 + 文档同步更新 |
+| `academic-paper-polisher` | 中英文学术论文润色、翻译、去 AI 味、实验分析、caption 与逻辑检查 |
 
 ### 🎙️ 会议与沟通
 
