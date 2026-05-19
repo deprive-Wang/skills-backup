@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Init"
+  short_description: "Codex-only project scan and codex.md maintenance."
+  default_prompt: "Use $init to initialize or refresh this Codex project context by scanning its structure and creating or updating the project-level codex.md in Chinese."
