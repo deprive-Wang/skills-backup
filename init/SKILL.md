@@ -27,9 +27,20 @@ Use this skill to create or refresh the project-level `codex.md` in the current 
 2. Inspect the project with `rg --files`, relevant manifests, configuration files, entry points, tests, and existing documentation.
 3. Codex-only helper: if available and useful, use `codex-project-onboarding` to gather project structure and technical context.
 4. Read any existing `codex.md` before editing it.
-5. Generate or update `codex.md` with stable facts, confirmed requirements, and actionable development context.
-6. For large projects, summarize primary paths and critical modules only; do not dump a complete file inventory.
-7. Verify the final Markdown is coherent, non-duplicative, and useful as future session context.
+5. If the user's intent, project goals, special requirements, business rules, or long-term preferences are unclear, ask concise clarification questions before writing those sections.
+6. Generate or update `codex.md` with stable facts, confirmed requirements, and actionable development context.
+7. For large projects, summarize primary paths and critical modules only; do not dump a complete file inventory.
+8. Verify the final Markdown is coherent, non-duplicative, and useful as future session context.
+
+## Clarification Questions
+
+Ask questions when important project context cannot be inferred from files or prior conversation.
+
+- Ask before inventing implementation goals, special requirements, business rules, target users, deployment assumptions, or long-term preferences.
+- Prefer 1-3 high-signal questions at a time.
+- Do not block on details that can be safely discovered from the repository.
+- If the user is unsure, help them decide by offering concrete options or examples.
+- Write unresolved items into `codex.md` as pending confirmation instead of guessing.
 
 ## Required Content
 
