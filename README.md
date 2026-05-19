@@ -1,4 +1,4 @@
-# Skills Backup — Codex / Claude 双平台通用
+﻿# Skills Backup — Codex / Claude 双平台通用
 
 本仓库备份全部 AI 编程助手的 Skill 资产，兼容 **OpenAI Codex** 与 **Anthropic Claude Code** 双平台。每个目录即一个独立 Skill，可在任一平台加载使用。
 
@@ -76,6 +76,7 @@ git clone https://github.com/deprive-Wang/codex-skills-backup.git ~/.codex/skill
 | `minimax-pdf` | 专业 PDF 设计排版 |
 | `markitdown` | 多格式文件与 Office 文档转换为 Markdown |
 | `minimax-xlsx` | Excel 电子表格创建与分析 |
+| `ppt-master` | 多格式内容转 SVG 页面并导出 PPTX 的演示文稿生成工作流 |
 | `pptx-generator` | PowerPoint 演示文稿生成 |
 | `doc` | DOCX 基础读写 |
 | `pdf` | PDF 基础读写 |
@@ -201,3 +202,4 @@ cp -r codex-skills-backup/* ~/.codex/skills/    # OpenAI Codex
 - `codex-` 前缀: Codex 特定版本
 - 无前缀: 双平台通用或 Claude 原生
 - `anthropic-skills:` 前缀: Anthropic 官方 Skill
+
