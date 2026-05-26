@@ -68,6 +68,24 @@ For Chinese AIGC reduction, keep technical terms unchanged. Preserve thesis/pape
 
 For Chinese thesis text, prefer precise academic expressions such as `结果表明`, `由此可见`, `该现象说明`, `在该条件下`, and `本文认为` when appropriate. Avoid lowering the register merely to reduce AIGC feel. The goal is human academic writing, not spoken narration.
 
+
+### PaperPure / Whole-Thesis High-Risk De-AI
+
+When a detector report such as PaperPure still marks most of a thesis as high-risk after light paraphrasing, treat that as evidence that synonym replacement, spacing changes, and sentence-level polishing are ineffective. Do not continue with mechanical local rewrites.
+
+Use a structural rewrite instead:
+
+1. Diagnose the report first: record total AIGC rate, AI-feature character count, high-risk distribution by chapter, and whether the previous revision actually reduced those numbers.
+2. Prioritize the largest high-risk sections, usually experiment analysis, algorithm/model chapters, theory/background sections, then abstract and conclusion. Do not spend most effort on isolated low-impact sentences.
+3. Rewrite paragraph argument structure, not just wording. Change the order of explanation, split or merge claims where needed, and rebuild the paragraph around the thesis's own model, formulas, figures, tables, experiment settings, and observed results.
+4. For experiment-analysis paragraphs, write from evidence: figure/table phenomenon -> numeric or trend observation -> mechanism tied to the algorithm -> bounded conclusion. Avoid template-only claims such as "the result shows the algorithm is effective" unless supported by concrete evidence.
+5. For algorithm/model paragraphs, bind prose to variables, constraints, formula roles, and module interactions. Explain why a variable affects SINR/EE/QoS, why a constraint narrows the feasible region, or why a module is separated. Generic statements like "the problem is non-convex" are not enough.
+6. For abstracts, rewrite from the actual thesis contribution: scenario, service types, model components, JOCDDQN module split, baselines, and main verified outcomes. Do not only polish background sentences.
+7. For conclusions and outlook, remove casual wording, but also avoid generic endings. Tie each conclusion to a chapter result or experiment condition.
+8. Preserve citations, formulas, algorithm names, experiment numbers, figure/table references, and technical conclusions exactly unless the user explicitly asks to change them.
+9. Clean malformed spacing introduced by prior revisions, especially broken technical names such as `JOCD DQN`, `H- NOMA`, `MA DRL`, or split abbreviations.
+
+A successful PaperPure-oriented pass should reduce exact high-risk source passages and change the explanatory structure of the highest-risk chapters. If the AIGC rate barely changes or AI-feature characters increase, explicitly report that the prior strategy failed and switch to this structural rewrite strategy.
 For English LaTeX de-AI, do not force changes if the text is already natural. In that case, keep the original in Part 1 and write this in Part 3:
 
 ```text
