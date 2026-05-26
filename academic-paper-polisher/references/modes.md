@@ -55,9 +55,18 @@ Part 3 [Modification Log]
 
 Use when the user asks for 去 AI 味, 降 AIGC, 降重, or more human academic writing.
 
-Prioritize natural rhythm, varied sentence structure, concrete claims, and restrained wording. Remove mechanical transitions such as `First and foremost` and `It is worth noting that` when the logic can connect naturally.
+**Hard constraints:**
 
-For Chinese AIGC reduction, keep technical terms unchanged. If a sentence contains many technical terms and is hard to rewrite naturally, simplify and compress it. If it contains few technical terms, expand the explanation modestly to sound more like a student or researcher writing naturally.
+1. **不压缩总字数** — Do not reduce the total word count. The output should be roughly the same length as the input, or slightly longer. When restructuring sentences, expand elsewhere to compensate if a sentence is shortened. Never output a noticeably shorter version.
+2. **保护正文引用标注** — Preserve all inline citation markers (e.g., `[6]`, `[7][8]`, `[12]-[14]`, `[22][25][27]`) exactly as they appear. Do not change, reorder, drop, or add citations. The citation numbers and their groupings must remain unchanged.
+
+Prioritize formal academic naturalness: varied sentence structure, concrete claims, restrained wording, and clear logical progression. Reduce AI-like regularity without making the prose chatty, casual, anecdotal, or essay-like.
+
+Remove mechanical transitions such as `First and foremost` and `It is worth noting that` when the logic can connect naturally. Do not replace them with colloquial connectors such as `说白了`, `其实就是`, `可以看到`, or `总的来说` unless the original text already uses that register and the user explicitly wants it.
+
+For Chinese AIGC reduction, keep technical terms unchanged. Preserve thesis/paper register and avoid over-oralized phrasing, internet-style wording, exaggerated tone, and subjective filler such as `一炸`, `拉满`, `很猛`, `说白了`, or `其实就是`. If a sentence contains many technical terms and is hard to rewrite naturally, simplify and restructure it while retaining rigor — keep the same information density, do not shorten. If it contains few technical terms, make the causal or explanatory relation more specific (moderately expanding the text), but do not add unsupported claims or casual examples.
+
+For Chinese thesis text, prefer precise academic expressions such as `结果表明`, `由此可见`, `该现象说明`, `在该条件下`, and `本文认为` when appropriate. Avoid lowering the register merely to reduce AIGC feel. The goal is human academic writing, not spoken narration.
 
 For English LaTeX de-AI, do not force changes if the text is already natural. In that case, keep the original in Part 1 and write this in Part 3:
 
