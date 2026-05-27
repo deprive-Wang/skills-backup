@@ -15,7 +15,6 @@ PaperSpine is split into task-focused skills:
 | `paper-spine-translate` | produce complete translation_zh/ with row-by-row translation |
 | `paper-spine-humanize` | reduce AI detection patterns via tiered stylistic constraints |
 | `paper-spine-audit` | check completeness, integrity audit, structured review, and translation coverage |
-| `paper-spine-update` | check and update local PaperSpine installs |
 
 Use the orchestrator for end-to-end tasks. Use a child skill directly when the
 user asks for that stage only.
