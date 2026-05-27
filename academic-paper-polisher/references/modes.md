@@ -55,42 +55,59 @@ Part 3 [Modification Log]
 
 Use when the user asks for 去 AI 味, 降 AIGC, 降重, or more human academic writing.
 
-**Hard constraints:**
+**Tier selection:** Default `medium` for Chinese thesis/manuscript text, `light` for English. User may specify `light`, `medium`, or `heavy`. Read the complete tier-specific directives at `references/humanize-tiers-zh.md` (Chinese) or `references/humanize-tiers-en.md` (English).
 
-1. **不压缩总字数** — Do not reduce the total word count. The output should be roughly the same length as the input, or slightly longer. When restructuring sentences, expand elsewhere to compensate if a sentence is shortened. Never output a noticeably shorter version.
-2. **保护正文引用标注** — Preserve all inline citation markers (e.g., `[6]`, `[7][8]`, `[12]-[14]`, `[22][25][27]`) exactly as they appear. Do not change, reorder, drop, or add citations. The citation numbers and their groupings must remain unchanged.
+### Hard Constraints (all tiers)
 
-Prioritize formal academic naturalness: varied sentence structure, concrete claims, restrained wording, and clear logical progression. Reduce AI-like regularity without making the prose chatty, casual, anecdotal, or essay-like.
+1. **不压缩总字数** — Do not reduce the total word count. Output should be roughly the same length as the input, or slightly longer. When restructuring sentences, expand elsewhere to compensate if a sentence is shortened.
+2. **保护正文引用标注** — Preserve all inline citation markers (e.g., `[6]`, `[7][8]`, `[12]-[14]`, `[22][25][27]`) exactly as they appear. Do not change, reorder, drop, or add citations.
+3. Keep technical terms, formulas, LaTeX commands, and numerical values unchanged unless heavy tier explicitly allows D5 term substitution.
+4. For Chinese thesis text, preserve academic register. Avoid over-oralized phrasing, internet-style wording, exaggerated tone, and subjective filler unless the original text already uses that register and the user explicitly wants it.
 
-Remove mechanical transitions such as `First and foremost` and `It is worth noting that` when the logic can connect naturally. Do not replace them with colloquial connectors such as `说白了`, `其实就是`, `可以看到`, or `总的来说` unless the original text already uses that register and the user explicitly wants it.
+### AIGC Detection Framework
 
-For Chinese AIGC reduction, keep technical terms unchanged. Preserve thesis/paper register and avoid over-oralized phrasing, internet-style wording, exaggerated tone, and subjective filler such as `一炸`, `拉满`, `很猛`, `说白了`, or `其实就是`. If a sentence contains many technical terms and is hard to rewrite naturally, simplify and restructure it while retaining rigor — keep the same information density, do not shorten. If it contains few technical terms, make the causal or explanatory relation more specific (moderately expanding the text), but do not add unsupported claims or casual examples.
+The humanize process works against 5 detection dimensions used by CNKI AIGC 2026 v3.0 and similar systems:
 
-For Chinese thesis text, prefer precise academic expressions such as `结果表明`, `由此可见`, `该现象说明`, `在该条件下`, and `本文认为` when appropriate. Avoid lowering the register merely to reduce AIGC feel. The goal is human academic writing, not spoken narration.
+| Dim | What It Measures | AI Text Signature |
+|-----|-----------------|-------------------|
+| D1-Sentence Length | Histogram of sentence lengths | AI: 15-25 chars single-peak bell; Human: multi-peak (5-8 + 15-25 + 40+) |
+| D2-Paragraph Structure | Cosine similarity of paragraph "grammar skeletons" | AI: 0.7-0.9; Human: 0.2-0.5 |
+| D3-Information Density | Independent info points per 100 chars/words | AI: 65%-75% flat; Human: 40%-85% fluctuating |
+| D4-Connector Frequency | Connectors per 1000 chars + paragraph-start ratio | AI: 8-15/1k uniform; Human: 2-6/1k clustered |
+| D5-Term-Context Match | Ratio of terms in "most standard" context | AI: ~100% standard; Human: occasional colloquial substitution |
 
+### Tier Overview
 
-### PaperPure / Whole-Thesis High-Risk De-AI
+- `light`: Fix D4 connectors and D1 sentence-length uniformity. Ban AI-high-frequency connectors. Every 3-4 sentences must have one significantly different length.
+- `medium`: Light + D2 paragraph structure diversity (different templates per paragraph) + D3 information density variation + first-person insertion (≥2 per 2000 words) + strengthened D1 (multi-peak distribution).
+- `heavy`: Medium + D5 term-context breaking (≥1 colloquial substitution per 800 words) + structural reordering + density labeling per paragraph + uncommon-but-precise academic vocabulary + tightened connectors (≤4 per 1000 words).
 
-When a detector report such as PaperPure still marks most of a thesis as high-risk after light paraphrasing, treat that as evidence that synonym replacement, spacing changes, and sentence-level polishing are ineffective. Do not continue with mechanical local rewrites.
+### Output Format
 
-Use a structural rewrite instead:
+When invoked standalone:
+- Output the humanized text in the standard format for the requested language.
+- Produce `humanize_matrix.md` as the teaching deliverable. Every change must be recorded:
 
-1. Diagnose the report first: record total AIGC rate, AI-feature character count, high-risk distribution by chapter, and whether the previous revision actually reduced those numbers.
-2. Prioritize the largest high-risk sections, usually experiment analysis, algorithm/model chapters, theory/background sections, then abstract and conclusion. Do not spend most effort on isolated low-impact sentences.
-3. Rewrite paragraph argument structure, not just wording. Change the order of explanation, split or merge claims where needed, and rebuild the paragraph around the thesis's own model, formulas, figures, tables, experiment settings, and observed results.
-4. For experiment-analysis paragraphs, write from evidence: figure/table phenomenon -> numeric or trend observation -> mechanism tied to the algorithm -> bounded conclusion. Avoid template-only claims such as "the result shows the algorithm is effective" unless supported by concrete evidence.
-5. For algorithm/model paragraphs, bind prose to variables, constraints, formula roles, and module interactions. Explain why a variable affects SINR/EE/QoS, why a constraint narrows the feasible region, or why a module is separated. Generic statements like "the problem is non-convex" are not enough.
-6. For abstracts, rewrite from the actual thesis contribution: scenario, service types, model components, JOCDDQN module split, baselines, and main verified outcomes. Do not only polish background sentences.
-7. For conclusions and outlook, remove casual wording, but also avoid generic endings. Tie each conclusion to a chapter result or experiment condition.
-8. Preserve citations, formulas, algorithm names, experiment numbers, figure/table references, and technical conclusions exactly unless the user explicitly asks to change them.
-9. Clean malformed spacing introduced by prior revisions, especially broken technical names such as `JOCD DQN`, `H- NOMA`, `MA DRL`, or split abbreviations.
+| Row ID | Manuscript Unit | AI Pattern Found | Detection Dim | Severity | Applied Change | Expected Effect | Teaching Note |
 
-A successful PaperPure-oriented pass should reduce exact high-risk source passages and change the explanatory structure of the highest-risk chapters. If the AIGC rate barely changes or AI-feature characters increase, explicitly report that the prior strategy failed and switch to this structural rewrite strategy.
-For English LaTeX de-AI, do not force changes if the text is already natural. In that case, keep the original in Part 1 and write this in Part 3:
+- For English LaTeX de-AI where text is already natural:
+  `[检测通过] 原文表达地道自然，无明显 AI 味，建议保留。`
 
-```text
-[检测通过] 原文表达地道自然，无明显 AI 味，建议保留。
-```
+### PaperPure / Whole-Thesis High-Risk Strategy
+
+When a detector report (PaperPure, CNKI AIGC, etc.) shows most of a thesis as high-risk after light paraphrasing, treat that as evidence that surface rewrites are ineffective. Switch to structural rewrite:
+
+1. Diagnose the report first: total AIGC rate, AI-feature character count, high-risk distribution by chapter, whether prior revision actually reduced those numbers.
+2. Prioritize the largest high-risk sections (experiment analysis, algorithm/model chapters, theory/background, then abstract and conclusion).
+3. Rewrite paragraph argument structure, not just wording. Change explanation order, split or merge claims, rebuild paragraphs around the thesis's own model, formulas, figures, tables, experiment settings, and observed results.
+4. For experiment-analysis paragraphs, write from evidence: figure/table phenomenon → numeric or trend observation → mechanism tied to algorithm → bounded conclusion.
+5. For algorithm/model paragraphs, bind prose to variables, constraints, formula roles, and module interactions. Explain why a variable affects the outcome, why a constraint narrows the feasible region, why a module is separated.
+6. For abstracts, rewrite from actual thesis contributions: scenario, service types, model components, module split, baselines, and main verified outcomes.
+7. For conclusions and outlook, remove casual wording; tie each conclusion to a chapter result or experiment condition.
+8. Preserve all citations, formulas, algorithm names, experiment numbers, figure/table references, and technical conclusions exactly.
+9. Clean malformed spacing introduced by prior revisions, especially broken technical names such as `JOCD DQN`, `H- NOMA`, `MA DRL`.
+
+If the AIGC rate barely changes or AI-feature characters increase after a pass, explicitly report that the prior strategy failed and switch to this structural rewrite strategy.
 
 ## Translation
 

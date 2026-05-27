@@ -17,7 +17,7 @@ Choose one mode from the user's wording, then follow the matching details in `re
 
 - `chinese-polish`: Chinese thesis/paper paragraph polishing, Word-friendly output, conservative edits.
 - `english-polish`: English LaTeX polishing for CS papers, stronger academic rewrite.
-- `de-ai`: Reduce AI-like phrasing or AIGC feel while keeping meaning and terms.
+- `de-ai`: Reduce AI-detection rates via a 5-dimension tiered framework. Supports three intensity levels — `light` (connectors + sentence length), `medium` (structure + density), `heavy` (term context + structural reordering). Default: `medium` for Chinese thesis text, `light` for English. When a PaperPure or similar AIGC detector report shows persistent high-risk marking, activates the whole-thesis structural rewrite strategy. Produces `humanize_matrix.md` as the teaching deliverable.
 - `translate-cn-en`: Turn Chinese draft into English academic LaTeX/prose.
 - `translate-en-cn`: Translate English LaTeX/paper text into fluent Chinese.
 - `expand`: Slightly expand English LaTeX text by adding only implied logic.
@@ -30,6 +30,65 @@ Choose one mode from the user's wording, then follow the matching details in `re
 - `reviewer-report`: Review a PDF or manuscript as a strict but fair CS reviewer.
 
 If the request combines modes, run them in the natural order: understand evidence, translate if needed, polish, then check logic.
+
+## Humanize Tiers (de-ai mode)
+
+When de-ai is selected, determine the tier from context or ask the user. Default: `medium` for Chinese thesis/manuscript text, `light` for English.
+
+- `light`: Fix D4 connectors and D1 sentence-length uniformity.
+- `medium`: Light + D2 paragraph structure diversity + D3 information density variation + first-person insertion + strengthened D1.
+- `heavy`: Medium + D5 term-context breaking + structural reordering + density labeling + uncommon vocabulary + tightened connectors.
+
+### AIGC Detection Framework
+
+The humanize process works against 5 detection dimensions used by CNKI AIGC 2026 v3.0 and similar systems:
+
+| Dim | What It Measures | AI Text Signature |
+|-----|-----------------|-------------------|
+| D1-Sentence Length | Histogram of sentence lengths | AI: 15-25 chars single-peak bell; Human: multi-peak (5-8 + 15-25 + 40+) |
+| D2-Paragraph Structure | Cosine similarity of paragraph "grammar skeletons" | AI: 0.7-0.9; Human: 0.2-0.5 |
+| D3-Information Density | Independent info points per 100 chars/words | AI: 65%-75% flat; Human: 40%-85% fluctuating |
+| D4-Connector Frequency | Connectors per 1000 chars + paragraph-start ratio | AI: 8-15/1k uniform; Human: 2-6/1k clustered |
+| D5-Term-Context Match | Ratio of terms appearing in "most standard" context | AI: ~100% standard; Human: occasional colloquial substitution |
+
+Read `references/humanize-tiers-zh.md` or `references/humanize-tiers-en.md` for complete tier-specific directives.
+
+### Humanize Matrix Deliverable
+
+Produce `humanize_matrix.md` alongside the polished output. Record every change:
+
+| Row ID | Manuscript Unit | AI Pattern Found | Detection Dim | Severity | Applied Change | Expected Effect | Teaching Note |
+
+Rules:
+- At least one row per writing unit for D1 (sentence length)
+- At least one row per paragraph for D2 (paragraph structure)
+- At least one row per connector replaced (D4)
+- At least one row per density adjustment (D3, medium+)
+- At least one row per term substitution (D5, heavy only)
+- Fill all 8 columns for every row — no empty cells
+- Severity: High (>50% contribution to detection) / Medium (20-50%) / Low (<20%)
+
+### PaperPure / Whole-Thesis High-Risk Strategy
+
+When a detector report (PaperPure, CNKI AIGC, etc.) shows most of a thesis as high-risk after light paraphrasing, treat that as evidence that surface rewrites are ineffective. Switch to structural rewrite:
+
+1. Diagnose the report first: total AIGC rate, AI-feature character count, high-risk distribution by chapter, whether prior revision actually reduced those numbers.
+2. Prioritize the largest high-risk sections (experiment analysis, algorithm/model, theory/background, then abstract and conclusion).
+3. Rewrite paragraph argument structure, not just wording. Change explanation order, split or merge claims, rebuild paragraphs around the thesis's own model, formulas, figures, tables, experiment settings, and observed results.
+4. For experiment analysis: write from evidence — figure/table phenomenon → numeric or trend observation → mechanism tied to algorithm → bounded conclusion.
+5. For algorithm/model paragraphs: bind prose to variables, constraints, formula roles, and module interactions. Explain why a variable affects the outcome, why a constraint narrows the feasible region, why a module is separated.
+6. For abstracts: rewrite from the actual thesis contribution — scenario, service types, model components, module split, baselines, and main verified outcomes.
+7. For conclusions and outlook: remove casual wording; tie each conclusion to a chapter result or experiment condition.
+8. Preserve all citations, formulas, algorithm names, experiment numbers, figure/table references, and technical conclusions exactly.
+9. Clean malformed spacing introduced by prior revisions, especially broken technical names such as `JOCD DQN`, `H- NOMA`, `MA DRL`.
+
+### Verification (de-ai mode)
+
+```powershell
+python "$env:USERPROFILE/.claude/paper-spine/scripts/humanize_check.py" paper_rewriting_output --markdown --write
+```
+
+Produces `paper_rewriting_output/humanize_report.md` with sentence-length stddev, connector density, matrix coverage, and remaining AI pattern flags.
 
 ## Output Discipline
 
