@@ -1,59 +1,59 @@
 ---
 name: codex-project-onboarding
-description: Read a project on first open and create or refresh a root `codex.md` summary. Use when the user wants Codex to understand a new codebase, generate a project briefing, summarize architecture, capture setup commands, or create onboarding notes for future sessions.
+description: 首次打开项目时读取并创建或刷新根目录 `codex.md` 摘要。当用户希望 Codex 理解新代码库、生成项目简报、总结架构、记录启动命令或为后续会话创建入门笔记时使用。
 ---
 
-# Codex Project Onboarding
+# Codex 项目入门
 
-Understand a project on first contact and create a practical `codex.md` in the project root.
+首次接触项目时理解项目，并在项目根目录创建实用的 `codex.md`。
 
-## Workflow
+## 工作流程
 
-1. Inspect the repo before writing:
-   - root files like `README`, `package.json`, `pyproject.toml`, `Cargo.toml`, `.env.example`
-   - likely entry points
-   - test configuration
-   - docs and architecture notes
-2. Build a concise mental model:
-   - what the project does
-   - major subsystems
-   - how to run or test it
-   - key external dependencies
-   - conventions or gotchas
-3. Create or update `codex.md` at the project root.
-4. Keep `codex.md` useful for future coding sessions, not as a generic repo summary.
+1. 写之前先检查仓库：
+   - 根目录文件，如 `README`、`package.json`、`pyproject.toml`、`Cargo.toml`、`.env.example`
+   - 可能的入口点
+   - 测试配置
+   - 文档和架构说明
+2. 建立简洁的心智模型：
+   - 项目做什么
+   - 主要子系统
+   - 如何运行或测试
+   - 关键外部依赖
+   - 约定或坑点
+3. 在项目根目录创建或更新 `codex.md`。
+4. 让 `codex.md` 对后续编码会话有用，而不是通用仓库摘要。
 
-## Required `codex.md` Sections
+## `codex.md` 必要章节
 
-Use these sections unless the repo clearly needs a different shape:
+除非仓库明显需要不同的结构，否则使用以下章节：
 
 ```md
 # Codex Notes
 
-## Project Summary
+## Project Summary（项目概述）
 
-## Structure
+## Structure（项目结构）
 
-## Run and Test
+## Run and Test（运行与测试）
 
-## Key Conventions
+## Key Conventions（关键约定）
 
-## Current Risks or Gaps
+## Current Risks or Gaps（当前风险或缺口）
 
-## Recommended First Actions
+## Recommended First Actions（建议的首步操作）
 ```
 
-## Content Rules
+## 内容规则
 
-- Keep the document short and high signal.
-- Prefer repo-specific facts over generic advice.
-- Include concrete commands when they can be discovered safely.
-- Mention important unknowns instead of pretending certainty.
-- Update the file in place if `codex.md` already exists and is stale.
+- 保持文档简短、高信号。
+- 优先写仓库特有的事实，而非通用建议。
+- 在可以安全发现的前提下，包含具体命令。
+- 如实说明重要未知事项，不假装确定。
+- 若 `codex.md` 已存在且过时，就地更新。
 
-## Guardrails
+## 护栏
 
-- Do not invent commands that were not supported by repo evidence.
-- Do not dump long file inventories.
-- Do not rewrite the whole document if only a small refresh is needed.
-- If the repo is large, summarize the main paths and defer deep detail.
+- 不编造没有仓库证据支持的命令。
+- 不堆砌冗长的文件清单。
+- 不重写整个文档，除非只需要小幅刷新。
+- 若仓库较大，总结主要路径并推迟深入细节。
