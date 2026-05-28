@@ -1,9 +1,9 @@
 ---
-name: planing-with-file
+name: planning-with-file
 description: Record confirmed plans into a local Markdown file during Plan mode workflows. Use when the user wants plan confirmation output to be persisted as `plan.md`, especially for requests like "save the plan", "record the plan", "write the plan to a file", or when a custom workflow says that approved Plan mode output should automatically become a document.
 ---
 
-# Planing With File
+# Planning With File
 
 Persist the final approved plan from a Plan mode workflow into `plan.md` in the current working directory.
 
