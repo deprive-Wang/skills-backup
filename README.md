@@ -112,20 +112,22 @@ git clone https://github.com/deprive-Wang/skills-backup.git ~/.codex/skills
 
 ### PaperSpine 论文工作流
 
-> 注意: PaperSpine UI 启动脚本 (`intake_wizard.py`, `launch_paperspine_ui.ps1/.sh`) 尚未实现，`/paperspine` 命令目前无法正常启动交互式配置向导。
+来源: [github.com/WUBING2023/PaperSpine](https://github.com/WUBING2023/PaperSpine)，使用 `install.ps1 -Target claude` 安装。
 
 | Skill | 描述 |
 |-------|------|
-| `paper-spine` | PaperSpine 编排器 (总入口) |
+| `paper-spine` | PaperSpine 编排器 (总入口，`/paperspine` 启动) |
 | `paper-spine-intake` | 配置接入 (flash/pro, scene, language) |
 | `paper-spine-ui` | 外部终端配置 UI |
-| `paper-spine-research` | 研究目标需求、下载参考资料 |
+| `paper-spine-research` | 研究目标需求、下载参考资料、学习优秀样例 |
 | `paper-spine-citation` | 引用支持库构建 |
 | `paper-spine-build` | 从材料构建论文 |
 | `paper-spine-rewrite` | 从动机/研究/证据重写手稿 |
 | `paper-spine-latex` | LaTeX 项目组装与编译 |
 | `paper-spine-translate` | 中文翻译包 (逐行翻译 + 全文翻译) |
+| `paper-spine-humanize` | 降低 AI 检测率 (分层风格约束) |
 | `paper-spine-audit` | 产出物审计 (缺失、浅层修改、逻辑迁移) |
+| `paper-spine-update` | 版本更新检查与升级 |
 
 ### 会议与沟通
 

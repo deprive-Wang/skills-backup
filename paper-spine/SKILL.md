@@ -7,7 +7,7 @@ description: Internal orchestrator — users should use /paperspine to start a f
 
 Use this skill as the suite entrypoint. It is the main orchestrator: it routes
 the user to UI, intake, research, citation, rewrite, build, LaTeX,
-translate, humanize, and audit branch skills.
+translate, humanize, audit, and update branch skills.
 
 ## Operating Principle
 
