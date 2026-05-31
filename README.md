@@ -190,6 +190,8 @@ git clone https://github.com/deprive-Wang/skills-backup.git ~/.codex/skills
 
 | Skill | 描述 |
 |-------|------|
+| `git-auto` | 自动提交当前 git 项目变更：检测变更 → 更新 README（如有生成器） → git add → commit → pull --rebase → push |
+| `paper-review` | Reviews thesis, manuscript, defense, and submission documents from a final-reviewer perspective by rendering native files to PDF and auditing layout, language, logic, figure-text consistency, data consistency, and citation support. Use when the user asks to check whether a paper can be printed/submitted, review a thesis or manuscript, inspect PDF/DOCX/PPT layout, compare text with figures/tables, or judge reviewer-facing risks. |
 | `setup-matt-pocock-skills` | Sets up an `## Agent skills` block in AGENTS.md/CLAUDE.md and `docs/agents/` so the engineering skills know this repo's issue tracker (GitHub or local markdown), triage label vocabulary, and domain doc layout. Run before first use of `to-issues`, `to-prd`, `triage`, `diagnose`, `tdd`, `improve-codebase-architecture`, or `zoom-out` — or if those skills appear to be missing context about the issue tracker, triage labels, or domain docs. |
 | `ubiquitous-language` | Extract a DDD-style ubiquitous language glossary from the current conversation, flagging ambiguities and proposing canonical terms. Saves to UBIQUITOUS_LANGUAGE.md. Use when user wants to define domain terms, build a glossary, harden terminology, create a ubiquitous language, or mentions "domain model" or "DDD". |
 | `zoom-out` | Tell the agent to zoom out and give broader context or a higher-level perspective. Use when you're unfamiliar with a section of code or need to understand how it fits into the bigger picture. |
@@ -245,4 +247,4 @@ git clone https://github.com/deprive-Wang/skills-backup.git ~/.codex/skills
 
 ---
 
-> README.md 由 `generate_readme.py` 自动生成，共收录 95 个 Skill。
+> README.md 由 `generate_readme.py` 自动生成，共收录 97 个 Skill。
