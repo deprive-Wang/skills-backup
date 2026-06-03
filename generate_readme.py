@@ -26,12 +26,12 @@ CATEGORY_MAP = {
         "setup-pre-commit",
     ],
     "文档生成": [
-        "minimax-docx", "minimax-pdf", "minimax-xlsx", "markitdown",
+        "minimax-docx", "minimax-pdf", "minimax-xlsx", "skills/common/markitdown",
         "ppt-master", "pptx-generator", "doc", "pdf", "paperjsx",
-        "codex-paperjsx", "Visiomaster",
+        "Visiomaster",
     ],
     "写作与内容": [
-        "content-research-writer", "codex-content-research-writer",
+        "content-research-writer",
         "edit-article", "codex-changelog", "codex-email-polish",
     ],
     "学术与论文": [
@@ -52,11 +52,11 @@ CATEGORY_MAP = {
     ],
     "知识管理": [
         "neat-freak", "obsidian-vault", "notion-research-documentation",
-        "notion-spec-to-implementation", "file-organizer", "codex-file-organizer",
+        "notion-spec-to-implementation", "file-organizer", "storage-analyzer",
     ],
     "项目管理": [
         "to-issues", "to-prd", "triage", "qa", "create-plan",
-        "codex-create-plan", "planning-with-file",
+        "planning-with-file",
     ],
     "技能系统": [
         "using-superpowers", "workflow-reference", "workflow-combos",
@@ -76,17 +76,11 @@ SKILL_NOTES: dict[str, str] = {
     "tdd": "与 `test-driven-development` 功能相同",
     "test-driven-development": "与 `tdd` 功能相同",
     "tdd-mattpocock": "含测试反模式指南",
-    "content-research-writer": "与 `codex-content-research-writer` 功能相同",
-    "codex-content-research-writer": "Codex 版本",
-    "file-organizer": "与 `codex-file-organizer` 功能相同",
-    "codex-file-organizer": "Codex 版本",
-    "create-plan": "与 `codex-create-plan` 功能相同",
-    "codex-create-plan": "Codex 版本",
+    "skills/common/markitdown": "通用转换工具",
     "meeting-insights-analyzer": "与 `codex-meeting-insights` 功能相同",
     "codex-meeting-insights": "Codex 版本",
     "meeting-notes-and-actions": "与 `codex-meeting-notes` 功能相同",
     "codex-meeting-notes": "Codex 版本",
-    "paperjsx": "与 `codex-paperjsx` 功能相同",
     "codex-paperjsx": "Codex 版本",
     "write-a-skill": "与 `write-a-skill-mattpocock` 功能相似",
     "write-a-skill-mattpocock": "Matt Pocock 版",
@@ -155,7 +149,7 @@ def parse_skill(skill_dir: Path) -> dict | None:
         description = description[1:-1]
 
     return {
-        "dir": skill_dir.name,
+        "dir": skill_dir.relative_to(SKILLS_DIR).as_posix(),
         "name": name,
         "description": description,
     }
@@ -172,9 +166,18 @@ def get_category(skill_name: str) -> str | None:
 def build_readme() -> str:
     """Generate the complete README.md content."""
     skills = []
-    for d in sorted(SKILLS_DIR.iterdir()):
-        if not d.is_dir() or d.name.startswith("."):
-            continue
+    skill_dirs = [
+        d for d in sorted(SKILLS_DIR.iterdir())
+        if d.is_dir() and not d.name.startswith(".")
+    ]
+    common_dir = SKILLS_DIR / "skills" / "common"
+    if common_dir.exists():
+        skill_dirs.extend(
+            d for d in sorted(common_dir.iterdir())
+            if d.is_dir() and not d.name.startswith(".")
+        )
+
+    for d in skill_dirs:
         parsed = parse_skill(d)
         if parsed:
             skills.append(parsed)
@@ -213,8 +216,9 @@ def build_readme() -> str:
     lines.append("## 双目录同步")
     lines.append("")
     lines.append(
-        "`~/.claude/skills/` 和 `~/.codex/skills/` 指向同一个 Git 仓库"
-        "（同一份文件，非独立 clone）。任一处修改后 commit + push 即可。"
+        "`~/.cc-switch/skills/` 是唯一维护的 Git 仓库；`~/.claude/skills/` "
+        "和 `~/.codex/skills/` 都是指向它的 Junction（同一份文件，非独立 clone）。"
+        "任一处修改后，都在 CCS 目录 commit + push。"
     )
     lines.append("")
     lines.append("**Remote:** `https://github.com/deprive-Wang/skills-backup.git`")
@@ -222,11 +226,10 @@ def build_readme() -> str:
     lines.append("## 快速恢复")
     lines.append("")
     lines.append("```bash")
-    lines.append("# Claude Code")
-    lines.append("git clone https://github.com/deprive-Wang/skills-backup.git ~/.claude/skills")
+    lines.append("# CCS 统一目录")
+    lines.append("git clone https://github.com/deprive-Wang/skills-backup.git ~/.cc-switch/skills")
     lines.append("")
-    lines.append("# OpenAI Codex (同一个仓库)")
-    lines.append("git clone https://github.com/deprive-Wang/skills-backup.git ~/.codex/skills")
+    lines.append("# 然后将 Claude / Codex skills 目录链接到 CCS 统一目录")
     lines.append("```")
     lines.append("")
     lines.append("---")
@@ -300,12 +303,8 @@ def build_readme() -> str:
     lines.append("|------|-----------|------|")
     lines.append("| TDD | `tdd` / `test-driven-development` | 功能完全相同 |")
     lines.append("| TDD (进阶) | `tdd-mattpocock` | 含测试反模式指南 |")
-    lines.append("| 内容写作 | `content-research-writer` / `codex-content-research-writer` | Codex 版本针对 Codex 环境适配 |")
-    lines.append("| 文件整理 | `file-organizer` / `codex-file-organizer` | 同上 |")
-    lines.append("| 创建计划 | `create-plan` / `codex-create-plan` | 同上 |")
     lines.append("| 会议洞察 | `meeting-insights-analyzer` / `codex-meeting-insights` | 同上 |")
     lines.append("| 会议纪要 | `meeting-notes-and-actions` / `codex-meeting-notes` | 同上 |")
-    lines.append("| 文档生成 | `paperjsx` / `codex-paperjsx` | 同上 |")
     lines.append("| Skill 创建 | `write-a-skill` / `write-a-skill-mattpocock` / `codex-skill-creator` | 三个变体 |")
     lines.append("")
 
@@ -329,7 +328,7 @@ def build_readme() -> str:
     lines.append("### 修改 Skill 后推送")
     lines.append("")
     lines.append("```bash")
-    lines.append("cd ~/.codex/skills   # 或 ~/.claude/skills")
+    lines.append("cd ~/.cc-switch/skills")
     lines.append("git add -A")
     lines.append('git commit -m "更新: <skill名> -- <简述>"')
     lines.append("git push")
@@ -338,9 +337,8 @@ def build_readme() -> str:
     lines.append("### 新电脑恢复")
     lines.append("")
     lines.append("```bash")
-    lines.append("git clone https://github.com/deprive-Wang/skills-backup.git ~/.claude/skills")
-    lines.append("# 或")
-    lines.append("git clone https://github.com/deprive-Wang/skills-backup.git ~/.codex/skills")
+    lines.append("git clone https://github.com/deprive-Wang/skills-backup.git ~/.cc-switch/skills")
+    lines.append("# 再把 ~/.claude/skills 和 ~/.codex/skills 链接到 ~/.cc-switch/skills")
     lines.append("```")
     lines.append("")
 

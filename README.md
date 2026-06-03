@@ -6,18 +6,17 @@
 
 ## 双目录同步
 
-`~/.claude/skills/` 和 `~/.codex/skills/` 指向同一个 Git 仓库（同一份文件，非独立 clone）。任一处修改后 commit + push 即可。
+`~/.cc-switch/skills/` 是唯一维护的 Git 仓库；`~/.claude/skills/` 和 `~/.codex/skills/` 都是指向它的 Junction（同一份文件，非独立 clone）。任一处修改后，都在 CCS 目录 commit + push。
 
 **Remote:** `https://github.com/deprive-Wang/skills-backup.git`
 
 ## 快速恢复
 
 ```bash
-# Claude Code
-git clone https://github.com/deprive-Wang/skills-backup.git ~/.claude/skills
+# CCS 统一目录
+git clone https://github.com/deprive-Wang/skills-backup.git ~/.cc-switch/skills
 
-# OpenAI Codex (同一个仓库)
-git clone https://github.com/deprive-Wang/skills-backup.git ~/.codex/skills
+# 然后将 Claude / Codex skills 目录链接到 CCS 统一目录
 ```
 
 ---
@@ -72,27 +71,25 @@ git clone https://github.com/deprive-Wang/skills-backup.git ~/.codex/skills
 
 | Skill | 描述 | 备注 |
 |-------|------|------|
-| `codex-paperjsx` | Generate PPTX presentations, DOCX documents, XLSX spreadsheets, and PDF reports from structured JSON input using PaperJSX. | Codex 版本 |
 | `doc` | Use when the task involves reading, creating, or editing `.docx` documents, especially when formatting or layout fidelity matters; prefer `python-docx` plus the bundled `scripts/render_docx.py` for visual checks. |  |
-| `markitdown` | Convert files and office documents to Markdown. Supports PDF, DOCX, PPTX, XLSX, images (with OCR), audio (with transcription), HTML, CSV, JSON, XML, ZIP, YouTube URLs, EPubs and more. |  |
 | `minimax-docx` | Professional DOCX document creation, editing, and formatting using OpenXML SDK (.NET). Three pipelines: (A) create new documents from scratch, (B) fill/edit content in existing documents, (C) apply template formatting with XSD validation gate-check. MUST use this skill whenever the user wants to produce, modify, or format a Word document — including when they say "write a report", "draft a proposal", "make a contract", "fill in this form", "reformat to match this template", or any task whose final output is a .docx file. Even if the user doesn't mention "docx" explicitly, if the task implies a printable/formal document, use this skill. |  |
 | `minimax-pdf` | Use this skill when visual quality and design identity matter for a PDF. CREATE (generate from scratch): "make a PDF", "generate a report", "write a proposal", "create a resume", "beautiful PDF", "professional document", "cover page", "polished PDF", "client-ready document". FILL (complete form fields): "fill in the form", "fill out this PDF", "complete the form fields", "write values into PDF", "what fields does this PDF have". REFORMAT (apply design to an existing doc): "reformat this document", "apply our style", "convert this Markdown/text to PDF", "make this doc look good", "re-style this PDF". This skill uses a token-based design system: color, typography, and spacing are derived from the document type and flow through every page. The output is print-ready. Prefer this skill when appearance matters, not just when any PDF output is needed. |  |
 | `minimax-xlsx` | Open, create, read, analyze, edit, or validate Excel/spreadsheet files (.xlsx, .xlsm, .csv, .tsv). Use when the user asks to create, build, modify, analyze, read, validate, or format any Excel spreadsheet, financial model, pivot table, or tabular data file. Covers: creating new xlsx from scratch, reading and analyzing existing files, editing existing xlsx with zero format loss, formula recalculation and validation, and applying professional financial formatting standards. Triggers on 'spreadsheet', 'Excel', '.xlsx', '.csv', 'pivot table', 'financial model', 'formula', or any request to produce tabular data in Excel format. |  |
-| `paperjsx` | Generate PPTX presentations, DOCX documents, XLSX spreadsheets, and PDF reports from structured JSON input using PaperJSX. | 与 `codex-paperjsx` 功能相同 |
+| `paperjsx` | Generate PPTX presentations, DOCX documents, XLSX spreadsheets, and PDF reports from structured JSON input using PaperJSX. |  |
 | `pdf` | Use when tasks involve reading, creating, or reviewing PDF files where rendering and layout matter; prefer visual checks by rendering pages (Poppler) and use Python tools such as `reportlab`, `pdfplumber`, and `pypdf` for generation and extraction. |  |
 | `ppt-master` | AI-driven multi-format SVG content generation system. Converts source documents (PDF/DOCX/URL/Markdown) into high-quality SVG pages and exports to PPTX through multi-role collaboration. Use when user asks to "create PPT", "make presentation", "生成PPT", "做PPT", "制作演示文稿", or mentions "ppt-master". |  |
 | `pptx-generator` | Generate, edit, and read PowerPoint presentations. Create from scratch with PptxGenJS (cover, TOC, content, section divider, summary slides), edit existing PPTX via XML workflows, or extract text with markitdown. Triggers: PPT, PPTX, PowerPoint, presentation, slide, deck, slides. |  |
 | `Visiomaster` | Windows-first Visio diagram reconstruction workflow for flowcharts, architecture diagrams, and paper-style module figures. Reuses ppt-master style analysis and composition discipline on the front half, but outputs editable Visio .vsdx plus exported .svg and .png through a scene.json to Visio pipeline. Use when the user wants a diagram recreated as editable Visio shapes instead of a pasted screenshot or PPT-only result. |  |
+| `skills/common/markitdown` | Convert files and office documents to Markdown. Supports PDF, DOCX, PPTX, XLSX, images (with OCR), audio (with transcription), HTML, CSV, JSON, XML, ZIP, YouTube URLs, EPubs and more. | 通用转换工具 |
 
 ### 写作与内容
 
-| Skill | 描述 | 备注 |
-|-------|------|------|
-| `codex-changelog` | Automatically creates user-facing changelogs from git commits by analyzing commit history, categorizing changes, and transforming technical commits into clear, customer-friendly release notes. Turns hours of manual changelog writing into minutes of automated generation. |  |
-| `codex-content-research-writer` | Assists in writing high-quality content by conducting research, adding citations, improving hooks, iterating on outlines, and providing real-time feedback on each section. Transforms your writing process from solo effort to collaborative partnership. | Codex 版本 |
-| `codex-email-polish` | Draft, rewrite, or condense emails with target tone, length, and audience; use for cold outreach, replies, status updates, or escalations where clarity and brevity matter. |  |
-| `content-research-writer` | Assists in writing high-quality content by conducting research, adding citations, improving hooks, iterating on outlines, and providing real-time feedback on each section. Transforms your writing process from solo effort to collaborative partnership. | 与 `codex-content-research-writer` 功能相同 |
-| `edit-article` | Edit and improve articles by restructuring sections, improving clarity, and tightening prose. Use when user wants to edit, revise, or improve an article draft. |  |
+| Skill | 描述 |
+|-------|------|
+| `codex-changelog` | Automatically creates user-facing changelogs from git commits by analyzing commit history, categorizing changes, and transforming technical commits into clear, customer-friendly release notes. Turns hours of manual changelog writing into minutes of automated generation. |
+| `codex-email-polish` | Draft, rewrite, or condense emails with target tone, length, and audience; use for cold outreach, replies, status updates, or escalations where clarity and brevity matter. |
+| `content-research-writer` | Assists in writing high-quality content by conducting research, adding citations, improving hooks, iterating on outlines, and providing real-time feedback on each section. Transforms your writing process from solo effort to collaborative partnership. |
+| `edit-article` | Edit and improve articles by restructuring sections, improving clarity, and tightening prose. Use when user wants to edit, revise, or improve an article draft. |
 
 ### 学术与论文
 
@@ -138,21 +135,20 @@ git clone https://github.com/deprive-Wang/skills-backup.git ~/.codex/skills
 
 ### 知识管理
 
-| Skill | 描述 | 备注 |
-|-------|------|------|
-| `codex-file-organizer` | Intelligently organizes your files and folders across your computer by understanding context, finding duplicates, suggesting better structures, and automating cleanup tasks. Reduces cognitive load and keeps your digital workspace tidy without manual effort. | Codex 版本 |
-| `file-organizer` | Intelligently organizes your files and folders across your computer by understanding context, finding duplicates, suggesting better structures, and automating cleanup tasks. Reduces cognitive load and keeps your digital workspace tidy without manual effort. | 与 `codex-file-organizer` 功能相同 |
-| `neat-freak` | End-of-session knowledge cleanup with OCD-level rigor — reconciles project docs (CLAUDE.md, README.md, docs/) and agent memory against the code so nothing rots. 会话结束后对项目文档和记忆进行洁癖级审查与同步。MUST trigger when the user says: "sync up", "tidy up docs", "update memory", "clean up docs", "/sync", "/neat", "同步一下", "整理文档", "整理一下", "更新记忆", "梳理一下", "收尾", "这个阶段做完了", "新人能直接上手", or any phrase suggesting a dev milestone where knowledge needs reconciliation. Also trigger when the user reports stale docs, conflicting memories, or wants a clean handoff to teammates or other agents. Bare "整理" / "tidy" with prior dev context counts — do not under-trigger. Cross-platform: works on Claude Code, OpenAI Codex, OpenCode, and OpenClaw. |  |
-| `notion-research-documentation` | Research across Notion and synthesize into structured documentation; use when gathering info from multiple Notion sources to produce briefs, comparisons, or reports with citations. |  |
-| `notion-spec-to-implementation` | Turn Notion specs into implementation plans, tasks, and progress tracking; use when implementing PRDs/feature specs and creating Notion plans + tasks from them. |  |
-| `obsidian-vault` | Search, create, and manage notes in the Obsidian vault with wikilinks and index notes. Use when user wants to find, create, or organize notes in Obsidian. |  |
+| Skill | 描述 |
+|-------|------|
+| `file-organizer` | Intelligently organizes your files and folders across your computer by understanding context, finding duplicates, suggesting better structures, and automating cleanup tasks. Reduces cognitive load and keeps your digital workspace tidy without manual effort. |
+| `neat-freak` | End-of-session knowledge cleanup with OCD-level rigor — reconciles project docs (CLAUDE.md, README.md, docs/) and agent memory against the code so nothing rots. 会话结束后对项目文档和记忆进行洁癖级审查与同步。MUST trigger when the user says: "sync up", "tidy up docs", "update memory", "clean up docs", "/sync", "/neat", "同步一下", "整理文档", "整理一下", "更新记忆", "梳理一下", "收尾", "这个阶段做完了", "新人能直接上手", or any phrase suggesting a dev milestone where knowledge needs reconciliation. Also trigger when the user reports stale docs, conflicting memories, or wants a clean handoff to teammates or other agents. Bare "整理" / "tidy" with prior dev context counts — do not under-trigger. Cross-platform: works on Claude Code, OpenAI Codex, OpenCode, and OpenClaw. |
+| `notion-research-documentation` | Research across Notion and synthesize into structured documentation; use when gathering info from multiple Notion sources to produce briefs, comparisons, or reports with citations. |
+| `notion-spec-to-implementation` | Turn Notion specs into implementation plans, tasks, and progress tracking; use when implementing PRDs/feature specs and creating Notion plans + tasks from them. |
+| `obsidian-vault` | Search, create, and manage notes in the Obsidian vault with wikilinks and index notes. Use when user wants to find, create, or organize notes in Obsidian. |
+| `storage-analyzer` | macOS / Windows 只读存储分析助手（自动识别系统）。扫描整机磁盘占用，找出 占空间大户，把每一项分成 🟢可自动清理 / 🟡需人工判断 / 🔴谨慎清理 三级并给出 可执行处置方案，生成排版精美、可折叠、命令可一键复制的交互式 HTML 报告，并可 起本地服务在网页上一键删除（移废纸篓/直接删）。扫描全程只读。务必在以下场景 使用：用户说"存储分析""磁盘满了""C盘/硬盘满了""空间不够""清理空间" "清理磁盘""占空间""哪些东西占地方""帮我看看存储""看一下电脑存储/空间" "存储空间""电脑空间不够""内存满了/不够/不足""看下内存/存储"（中文口语里 "内存"常指存储空间）"storage analysis""disk cleanup""清缓存""磁盘清理"； 或用户抱怨电脑没空间、想知道什么东西吃硬盘、想要清理建议时。注意：若用户明确 指运行内存/RAM（如"哪个进程吃内存""内存占用高"想看活动监视器），那是 RAM 不是存储，不属于本 skill。 |
 
 ### 项目管理
 
 | Skill | 描述 | 备注 |
 |-------|------|------|
-| `codex-create-plan` | Create a concise plan. Use when a user explicitly asks for a plan related to a coding task. | Codex 版本 |
-| `create-plan` | Create a concise plan. Use when a user explicitly asks for a plan related to a coding task. | 与 `codex-create-plan` 功能相同 |
+| `create-plan` | Create a concise plan. Use when a user explicitly asks for a plan related to a coding task. |  |
 | `planning-with-file` | Record confirmed plans into a local Markdown file during Plan mode workflows. Use when the user wants plan confirmation output to be persisted as `plan.md`, especially for requests like "save the plan", "record the plan", "write the plan to a file", or when a custom workflow says that approved Plan mode output should automatically become a document. | 原名 `planing-with-file`，已修正拼写 |
 | `qa` | Interactive QA session where user reports bugs or issues conversationally, and the agent files GitHub issues. Explores the codebase in the background for context and domain language. Use when user wants to report bugs, do QA, file issues conversationally, or mentions "QA session". |  |
 | `to-issues` | Break a plan, spec, or PRD into independently-grabbable issues on the project issue tracker using tracer-bullet vertical slices. Use when user wants to convert a plan into issues, create implementation tickets, or break down work into issues. |  |
@@ -206,12 +202,8 @@ git clone https://github.com/deprive-Wang/skills-backup.git ~/.codex/skills
 |------|-----------|------|
 | TDD | `tdd` / `test-driven-development` | 功能完全相同 |
 | TDD (进阶) | `tdd-mattpocock` | 含测试反模式指南 |
-| 内容写作 | `content-research-writer` / `codex-content-research-writer` | Codex 版本针对 Codex 环境适配 |
-| 文件整理 | `file-organizer` / `codex-file-organizer` | 同上 |
-| 创建计划 | `create-plan` / `codex-create-plan` | 同上 |
 | 会议洞察 | `meeting-insights-analyzer` / `codex-meeting-insights` | 同上 |
 | 会议纪要 | `meeting-notes-and-actions` / `codex-meeting-notes` | 同上 |
-| 文档生成 | `paperjsx` / `codex-paperjsx` | 同上 |
 | Skill 创建 | `write-a-skill` / `write-a-skill-mattpocock` / `codex-skill-creator` | 三个变体 |
 
 ---
@@ -231,7 +223,7 @@ git clone https://github.com/deprive-Wang/skills-backup.git ~/.codex/skills
 ### 修改 Skill 后推送
 
 ```bash
-cd ~/.codex/skills   # 或 ~/.claude/skills
+cd ~/.cc-switch/skills
 git add -A
 git commit -m "更新: <skill名> -- <简述>"
 git push
@@ -240,11 +232,10 @@ git push
 ### 新电脑恢复
 
 ```bash
-git clone https://github.com/deprive-Wang/skills-backup.git ~/.claude/skills
-# 或
-git clone https://github.com/deprive-Wang/skills-backup.git ~/.codex/skills
+git clone https://github.com/deprive-Wang/skills-backup.git ~/.cc-switch/skills
+# 再把 ~/.claude/skills 和 ~/.codex/skills 链接到 ~/.cc-switch/skills
 ```
 
 ---
 
-> README.md 由 `generate_readme.py` 自动生成，共收录 97 个 Skill。
+> README.md 由 `generate_readme.py` 自动生成，共收录 94 个 Skill。
