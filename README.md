@@ -173,7 +173,6 @@ git clone https://github.com/deprive-Wang/skills-backup.git ~/.cc-switch/skills
 | Skill | 描述 | 备注 |
 |-------|------|------|
 | `codex-project-onboarding` | 首次打开项目时读取并创建或刷新根目录 `codex.md` 摘要。当用户希望 Codex 理解新代码库、生成项目简报、总结架构、记录启动命令或为后续会话创建入门笔记时使用。 | Codex 专用 |
-| `init` | Codex-only project initialization workflow. Use when the user enters /init, asks to initialize a project, scan a project, generate codex.md, update codex.md, or create a project onboarding summary for Codex. Produces or updates a project-root codex.md, preferably in Chinese, covering goals, overview, structure, commands, constraints, special requirements, and maintenance notes. Claude does not need this skill. | Codex 专用 |
 
 ### 辅助工具
 
@@ -187,6 +186,7 @@ git clone https://github.com/deprive-Wang/skills-backup.git ~/.cc-switch/skills
 | Skill | 描述 |
 |-------|------|
 | `git-auto` | 自动提交当前 git 项目变更：检测变更 → 更新 README（如有生成器） → git add → commit → pull --rebase → push |
+| `hatch-pet` | Create, repair, validate, visually QA, and package Codex-compatible v2 animated pets from character art, generated images, company or prospect brand cues, or visual references. Use for any new Codex pet, custom mascot, non-pixel pet style, brand-inspired pet, existing-pet repair, or 8x11 spritesheet workflow requiring all 9 standard animation rows, 16 look directions, deterministic assembly, QA artifacts, and spriteVersionNumber 2 packaging. |
 | `paper-review` | Reviews thesis, manuscript, defense, and submission documents from a final-reviewer perspective by rendering native files to PDF and auditing layout, language, logic, figure-text consistency, data consistency, and citation support. Use when the user asks to check whether a paper can be printed/submitted, review a thesis or manuscript, inspect PDF/DOCX/PPT layout, compare text with figures/tables, or judge reviewer-facing risks. |
 | `setup-matt-pocock-skills` | Sets up an `## Agent skills` block in AGENTS.md/CLAUDE.md and `docs/agents/` so the engineering skills know this repo's issue tracker (GitHub or local markdown), triage label vocabulary, and domain doc layout. Run before first use of `to-issues`, `to-prd`, `triage`, `diagnose`, `tdd`, `improve-codebase-architecture`, or `zoom-out` — or if those skills appear to be missing context about the issue tracker, triage labels, or domain docs. |
 | `ubiquitous-language` | Extract a DDD-style ubiquitous language glossary from the current conversation, flagging ambiguities and proposing canonical terms. Saves to UBIQUITOUS_LANGUAGE.md. Use when user wants to define domain terms, build a glossary, harden terminology, create a ubiquitous language, or mentions "domain model" or "DDD". |

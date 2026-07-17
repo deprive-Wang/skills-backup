@@ -64,7 +64,7 @@ CATEGORY_MAP = {
         "codex-skill-creator", "codex-template-skill",
     ],
     "项目初始化": [
-        "init", "codex-project-onboarding",
+        "codex-project-onboarding",
     ],
     "辅助工具": [
         "caveman", "spreadsheet-formula-helper",
@@ -85,7 +85,6 @@ SKILL_NOTES: dict[str, str] = {
     "write-a-skill": "与 `write-a-skill-mattpocock` 功能相似",
     "write-a-skill-mattpocock": "Matt Pocock 版",
     "codex-template-skill": "创建新 skill 的起始模板",
-    "init": "Codex 专用",
     "codex-project-onboarding": "Codex 专用",
     "planning-with-file": "原名 `planing-with-file`，已修正拼写",
     "caveman": "超压缩通信模式 (省 75% Token)",
