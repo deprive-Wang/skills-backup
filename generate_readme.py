@@ -18,7 +18,7 @@ CATEGORY_MAP = {
         "improve-codebase-architecture", "code-simplifier",
     ],
     "调试与测试": [
-        "systematic-debugging", "diagnose", "tdd", "tdd-mattpocock",
+        "systematic-debugging", "diagnose", "tdd",
         "test-driven-development", "webapp-testing", "playwright",
     ],
     "Git 工具": [
@@ -47,8 +47,7 @@ CATEGORY_MAP = {
         "paper-spine-humanize", "paper-spine-audit", "paper-spine-update",
     ],
     "会议与沟通": [
-        "meeting-insights-analyzer", "codex-meeting-insights",
-        "meeting-notes-and-actions", "codex-meeting-notes",
+        "codex-meeting-insights", "codex-meeting-notes",
     ],
     "知识管理": [
         "neat-freak", "obsidian-vault", "notion-research-documentation",
@@ -60,7 +59,7 @@ CATEGORY_MAP = {
     ],
     "技能系统": [
         "using-superpowers", "workflow-reference", "workflow-combos",
-        "writing-skills", "write-a-skill", "write-a-skill-mattpocock",
+        "writing-skills",
         "codex-skill-creator", "codex-template-skill",
     ],
     "项目初始化": [
@@ -73,17 +72,13 @@ CATEGORY_MAP = {
 
 # Manual notes for specific skills (skill_name -> note)
 SKILL_NOTES: dict[str, str] = {
-    "tdd": "与 `test-driven-development` 功能相同",
-    "test-driven-development": "与 `tdd` 功能相同",
-    "tdd-mattpocock": "含测试反模式指南",
+    "tdd": "保留版本；强调行为测试和垂直切片",
+    "test-driven-development": "严格测试优先流程",
     "skills/common/markitdown": "通用转换工具",
-    "meeting-insights-analyzer": "与 `codex-meeting-insights` 功能相同",
-    "codex-meeting-insights": "Codex 版本",
-    "meeting-notes-and-actions": "与 `codex-meeting-notes` 功能相同",
-    "codex-meeting-notes": "Codex 版本",
+    "codex-meeting-insights": "保留版本",
+    "codex-meeting-notes": "保留版本",
     "codex-paperjsx": "Codex 版本",
-    "write-a-skill": "与 `write-a-skill-mattpocock` 功能相似",
-    "write-a-skill-mattpocock": "Matt Pocock 版",
+    "codex-skill-creator": "保留版本；系统层副本不纳入本仓库",
     "codex-template-skill": "创建新 skill 的起始模板",
     "codex-project-onboarding": "Codex 专用",
     "planning-with-file": "原名 `planing-with-file`，已修正拼写",
@@ -217,7 +212,8 @@ def build_readme() -> str:
     lines.append(
         "`~/.cc-switch/skills/` 是唯一维护的 Git 仓库；`~/.claude/skills/` "
         "和 `~/.codex/skills/` 都是指向它的 Junction（同一份文件，非独立 clone）。"
-        "任一处修改后，都在 CCS 目录 commit + push。"
+        "自定义 Skill 修改后，在 CCS 目录 commit + push；Codex 系统层 `.system/` "
+        "由官方维护，不纳入本仓库追踪。"
     )
     lines.append("")
     lines.append("**Remote:** `https://github.com/deprive-Wang/skills-backup.git`")
@@ -300,11 +296,8 @@ def build_readme() -> str:
     lines.append("")
     lines.append("| 功能 | 可选 Skill | 说明 |")
     lines.append("|------|-----------|------|")
-    lines.append("| TDD | `tdd` / `test-driven-development` | 功能完全相同 |")
-    lines.append("| TDD (进阶) | `tdd-mattpocock` | 含测试反模式指南 |")
-    lines.append("| 会议洞察 | `meeting-insights-analyzer` / `codex-meeting-insights` | 同上 |")
-    lines.append("| 会议纪要 | `meeting-notes-and-actions` / `codex-meeting-notes` | 同上 |")
-    lines.append("| Skill 创建 | `write-a-skill` / `write-a-skill-mattpocock` / `codex-skill-creator` | 三个变体 |")
+    lines.append("| TDD | `tdd` / `test-driven-development` | 两种不同侧重点：行为测试与严格测试优先 |")
+    lines.append("| Skill 创建 | `codex-skill-creator` / `writing-skills` | 创建指南与测试驱动的 Skill 编写流程 |")
     lines.append("")
 
     # Naming conventions
@@ -328,7 +321,7 @@ def build_readme() -> str:
     lines.append("")
     lines.append("```bash")
     lines.append("cd ~/.cc-switch/skills")
-    lines.append("git add -A")
+    lines.append("git add <明确的 Skill 路径> README.md generate_readme.py")
     lines.append('git commit -m "更新: <skill名> -- <简述>"')
     lines.append("git push")
     lines.append("```")

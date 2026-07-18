@@ -6,7 +6,7 @@
 
 ## 双目录同步
 
-`~/.cc-switch/skills/` 是唯一维护的 Git 仓库；`~/.claude/skills/` 和 `~/.codex/skills/` 都是指向它的 Junction（同一份文件，非独立 clone）。任一处修改后，都在 CCS 目录 commit + push。
+`~/.cc-switch/skills/` 是唯一维护的 Git 仓库；`~/.claude/skills/` 和 `~/.codex/skills/` 都是指向它的 Junction（同一份文件，非独立 clone）。自定义 Skill 修改后，在 CCS 目录 commit + push；Codex 系统层 `.system/` 由官方维护，不纳入本仓库追踪。
 
 **Remote:** `https://github.com/deprive-Wang/skills-backup.git`
 
@@ -53,9 +53,8 @@ git clone https://github.com/deprive-Wang/skills-backup.git ~/.cc-switch/skills
 | `diagnose` | Disciplined diagnosis loop for hard bugs and performance regressions. Reproduce → minimise → hypothesise → instrument → fix → regression-test. Use when user says "diagnose this" / "debug this", reports a bug, says something is broken/throwing/failing, or describes a performance regression. |  |
 | `playwright` | Use when the task requires automating a real browser from the terminal (navigation, form filling, snapshots, screenshots, data extraction, UI-flow debugging) via `playwright-cli` or the bundled wrapper script. |  |
 | `systematic-debugging` | Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes |  |
-| `tdd` | Test-driven development with red-green-refactor loop. Use when user wants to build features or fix bugs using TDD, mentions "red-green-refactor", wants integration tests, or asks for test-first development. | 与 `test-driven-development` 功能相同 |
-| `tdd-mattpocock` | Test-driven development with red-green-refactor loop. Use when user wants to build features or fix bugs using TDD, mentions "red-green-refactor", wants integration tests, or asks for test-first development. | 含测试反模式指南 |
-| `test-driven-development` | Use when implementing any feature or bugfix, before writing implementation code | 与 `tdd` 功能相同 |
+| `tdd` | Test-driven development with red-green-refactor loop. Use when user wants to build features or fix bugs using TDD, mentions "red-green-refactor", wants integration tests, or asks for test-first development. | 保留版本；强调行为测试和垂直切片 |
+| `test-driven-development` | Use when implementing any feature or bugfix, before writing implementation code | 严格测试优先流程 |
 | `webapp-testing` | Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs. |  |
 
 ### Git 工具
@@ -128,10 +127,8 @@ git clone https://github.com/deprive-Wang/skills-backup.git ~/.cc-switch/skills
 
 | Skill | 描述 | 备注 |
 |-------|------|------|
-| `codex-meeting-insights` | Analyzes meeting transcripts and recordings to uncover behavioral patterns, communication insights, and actionable feedback. Identifies when you avoid conflict, use filler words, dominate conversations, or miss opportunities to listen. Perfect for professionals seeking to improve their communication and leadership skills. | Codex 版本 |
-| `codex-meeting-notes` | Turn meeting transcripts or rough notes into crisp summaries with decisions, risks, and owner-tagged action items; use for Zoom/Meet/Teams transcripts, call notes, or long meeting chats to generate share-ready outputs. | Codex 版本 |
-| `meeting-insights-analyzer` | Analyzes meeting transcripts and recordings to uncover behavioral patterns, communication insights, and actionable feedback. Identifies when you avoid conflict, use filler words, dominate conversations, or miss opportunities to listen. Perfect for professionals seeking to improve their communication and leadership skills. | 与 `codex-meeting-insights` 功能相同 |
-| `meeting-notes-and-actions` | Turn meeting transcripts or rough notes into crisp summaries with decisions, risks, and owner-tagged action items; use for Zoom/Meet/Teams transcripts, call notes, or long meeting chats to generate share-ready outputs. | 与 `codex-meeting-notes` 功能相同 |
+| `codex-meeting-insights` | Analyzes meeting transcripts and recordings to uncover behavioral patterns, communication insights, and actionable feedback. Identifies when you avoid conflict, use filler words, dominate conversations, or miss opportunities to listen. Perfect for professionals seeking to improve their communication and leadership skills. | 保留版本 |
+| `codex-meeting-notes` | Turn meeting transcripts or rough notes into crisp summaries with decisions, risks, and owner-tagged action items; use for Zoom/Meet/Teams transcripts, call notes, or long meeting chats to generate share-ready outputs. | 保留版本 |
 
 ### 知识管理
 
@@ -159,13 +156,11 @@ git clone https://github.com/deprive-Wang/skills-backup.git ~/.cc-switch/skills
 
 | Skill | 描述 | 备注 |
 |-------|------|------|
-| `codex-skill-creator` | Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Codex's capabilities with specialized knowledge, workflows, or tool integrations. |  |
+| `codex-skill-creator` | Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Codex's capabilities with specialized knowledge, workflows, or tool integrations. | 保留版本；系统层副本不纳入本仓库 |
 | `codex-template-skill` | Skill 模板骨架。复制此目录并替换 frontmatter 和正文来创建新 skill。不要直接使用。 | 创建新 skill 的起始模板 |
 | `using-superpowers` | Use when starting any conversation - establishes how to find and use skills, requiring Skill tool invocation before ANY response including clarifying questions |  |
 | `workflow-combos` | 常用小组合 — 按场景打包的技能组合。当用户提到开会、见导师、整理、润色、周报时使用。 |  |
 | `workflow-reference` | 全部技能速查手册。列出所有已安装技能及其一句话用途，按类别分组。当用户想知道"有哪些技能"、"这个能干嘛"时使用。 |  |
-| `write-a-skill` | Create new agent skills with proper structure, progressive disclosure, and bundled resources. Use when user wants to create, write, or build a new skill. | 与 `write-a-skill-mattpocock` 功能相似 |
-| `write-a-skill-mattpocock` | Create new agent skills with proper structure, progressive disclosure, and bundled resources. Use when user wants to create, write, or build a new skill. | Matt Pocock 版 |
 | `writing-skills` | Use when creating new skills, editing existing skills, or verifying skills work before deployment |  |
 
 ### 项目初始化
@@ -200,11 +195,8 @@ git clone https://github.com/deprive-Wang/skills-backup.git ~/.cc-switch/skills
 
 | 功能 | 可选 Skill | 说明 |
 |------|-----------|------|
-| TDD | `tdd` / `test-driven-development` | 功能完全相同 |
-| TDD (进阶) | `tdd-mattpocock` | 含测试反模式指南 |
-| 会议洞察 | `meeting-insights-analyzer` / `codex-meeting-insights` | 同上 |
-| 会议纪要 | `meeting-notes-and-actions` / `codex-meeting-notes` | 同上 |
-| Skill 创建 | `write-a-skill` / `write-a-skill-mattpocock` / `codex-skill-creator` | 三个变体 |
+| TDD | `tdd` / `test-driven-development` | 两种不同侧重点：行为测试与严格测试优先 |
+| Skill 创建 | `codex-skill-creator` / `writing-skills` | 创建指南与测试驱动的 Skill 编写流程 |
 
 ---
 
@@ -224,7 +216,7 @@ git clone https://github.com/deprive-Wang/skills-backup.git ~/.cc-switch/skills
 
 ```bash
 cd ~/.cc-switch/skills
-git add -A
+git add <明确的 Skill 路径> README.md generate_readme.py
 git commit -m "更新: <skill名> -- <简述>"
 git push
 ```
@@ -238,4 +230,4 @@ git clone https://github.com/deprive-Wang/skills-backup.git ~/.cc-switch/skills
 
 ---
 
-> README.md 由 `generate_readme.py` 自动生成，共收录 94 个 Skill。
+> README.md 由 `generate_readme.py` 自动生成，共收录 89 个 Skill。
