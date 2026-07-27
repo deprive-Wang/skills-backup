@@ -8,80 +8,34 @@ SKILLS_DIR = Path.home() / ".cc-switch" / "skills"
 
 # Category definitions: (category_name, emoji_icon, skill_name_list)
 CATEGORY_MAP = {
-    "开发工作流": [
-        "feature-dev", "subagent-driven-development", "executing-plans",
-        "dispatching-parallel-agents", "writing-plans", "workflow-code",
-    ],
+    "开发工作流": ["feature-dev"],
     "代码质量": [
-        "pr-review-toolkit", "requesting-code-review", "receiving-code-review",
-        "verification-before-completion", "karpathy-guidelines",
-        "improve-codebase-architecture", "code-simplifier",
+        "verification-before-completion", "karpathy-guidelines", "code-simplifier",
     ],
-    "调试与测试": [
-        "systematic-debugging", "diagnose", "tdd",
-        "test-driven-development", "webapp-testing", "playwright",
-    ],
-    "Git 工具": [
-        "git-guardrails", "finishing-a-development-branch", "using-git-worktrees",
-        "setup-pre-commit",
-    ],
+    "调试与测试": ["systematic-debugging", "tdd", "webapp-testing"],
     "文档生成": [
-        "minimax-docx", "minimax-pdf", "minimax-xlsx", "skills/common/markitdown",
-        "ppt-master", "pptx-generator", "doc", "pdf", "paperjsx",
-        "Visiomaster",
-    ],
-    "写作与内容": [
-        "content-research-writer",
-        "edit-article", "codex-changelog", "codex-email-polish",
+        "skills/common/markitdown", "ppt-master", "doc", "pdf", "Visiomaster",
     ],
     "学术与论文": [
-        "workflow-thesis", "hv-analysis", "academic-paper-polisher",
-        "nature-paper2ppt", "nature-polishing", "nature-reader",
-        "nature-response", "nature-writing", "brainstorming",
-        "grill-me", "grill-with-docs",
-    ],
-    "PaperSpine 论文工作流": [
-        "paper-spine", "paper-spine-intake", "paper-spine-ui",
-        "paper-spine-research", "paper-spine-citation", "paper-spine-build",
-        "paper-spine-rewrite", "paper-spine-latex", "paper-spine-translate",
-        "paper-spine-humanize", "paper-spine-audit", "paper-spine-update",
+        "academic-paper-polisher", "nature-reader", "paper-review",
     ],
     "会议与沟通": [
         "codex-meeting-insights", "codex-meeting-notes",
     ],
-    "知识管理": [
-        "neat-freak", "obsidian-vault", "notion-research-documentation",
-        "notion-spec-to-implementation", "file-organizer", "storage-analyzer",
-    ],
-    "项目管理": [
-        "to-issues", "to-prd", "triage", "qa", "create-plan",
-        "planning-with-file",
-    ],
-    "技能系统": [
-        "using-superpowers", "workflow-reference", "workflow-combos",
-        "writing-skills",
-        "codex-skill-creator", "codex-template-skill",
-    ],
+    "知识管理": ["notion-research-documentation", "storage-analyzer"],
     "项目初始化": [
         "codex-project-onboarding",
     ],
-    "辅助工具": [
-        "caveman", "spreadsheet-formula-helper",
-    ],
+    "辅助工具": ["caveman"],
 }
 
 # Manual notes for specific skills (skill_name -> note)
 SKILL_NOTES: dict[str, str] = {
     "tdd": "保留版本；强调行为测试和垂直切片",
-    "test-driven-development": "严格测试优先流程",
     "skills/common/markitdown": "通用转换工具",
     "codex-meeting-insights": "保留版本",
     "codex-meeting-notes": "保留版本",
-    "codex-paperjsx": "Codex 版本",
-    "codex-skill-creator": "保留版本；系统层副本不纳入本仓库",
-    "codex-template-skill": "创建新 skill 的起始模板",
     "codex-project-onboarding": "Codex 专用",
-    "planning-with-file": "原名 `planing-with-file`，已修正拼写",
     "caveman": "超压缩通信模式 (省 75% Token)",
 }
 
@@ -287,17 +241,18 @@ def build_readme() -> str:
             lines.append(f"| `{s['dir']}` | {desc} |")
         lines.append("")
 
-    # Duplicate / variant note
+    # Compact set note
     lines.append("---")
     lines.append("")
-    lines.append("## 重复/变体 Skill 说明")
+    lines.append("## 精简说明")
     lines.append("")
-    lines.append("以下 skill 存在功能重复或变体关系，可根据偏好选择使用：")
+    lines.append("同一类能力只保留一个主要入口，官方系统 skill 位于 `.system/`，不列入自定义索引：")
     lines.append("")
     lines.append("| 功能 | 可选 Skill | 说明 |")
     lines.append("|------|-----------|------|")
-    lines.append("| TDD | `tdd` / `test-driven-development` | 两种不同侧重点：行为测试与严格测试优先 |")
-    lines.append("| Skill 创建 | `codex-skill-creator` / `writing-skills` | 创建指南与测试驱动的 Skill 编写流程 |")
+    lines.append("| 调试与 TDD | `systematic-debugging` / `tdd` | 分别负责根因调试与测试驱动开发 |")
+    lines.append("| 科研展示 | `ppt-master` / `Visiomaster` | 分别负责 PPT 与可编辑 Visio 图 |")
+    lines.append("| 文档处理 | `doc` / `pdf` | 分别负责 DOCX 与 PDF |")
     lines.append("")
 
     # Naming conventions
@@ -307,7 +262,6 @@ def build_readme() -> str:
     lines.append("")
     lines.append("- `codex-` 前缀: Codex 特定版本")
     lines.append("- `nature-` 前缀: Nature 学术写作系列")
-    lines.append("- `paper-spine-` 前缀: PaperSpine 论文工作流系列")
     lines.append("- 无前缀: 双平台通用或 Claude 原生")
     lines.append("- 大写开头 (`Visiomaster`): 特殊命名约定")
     lines.append("")

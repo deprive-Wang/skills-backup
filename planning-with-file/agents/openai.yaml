@@ -1,4 +1,0 @@
-interface:
-  display_name: "planing with file"
-  short_description: "Save confirmed Plan mode plans into plan.md automatically."
-  default_prompt: "Use this skill when a user works in Plan mode and wants confirmed plans written to plan.md automatically."
