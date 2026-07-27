@@ -8,3 +8,6 @@ __pycache__/
 
 # Codex-managed system skills; keep them on disk but outside this backup repo.
 /.system/
+
+# Local-only private skills; never push to remote.
+/xiao-huang-wen/
