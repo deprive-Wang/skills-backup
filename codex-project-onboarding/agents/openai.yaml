@@ -1,4 +1,0 @@
-interface:
-  display_name: "codex project onboarding"
-  short_description: "Read a project and create a root codex.md."
-  default_prompt: "Use this skill when opening a codebase for the first time to inspect it and create or refresh a practical codex.md summary."

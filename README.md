@@ -23,19 +23,11 @@ git clone https://github.com/deprive-Wang/skills-backup.git ~/.cc-switch/skills
 
 ## Skill 分类索引
 
-### 开发工作流
-
-| Skill | 描述 |
-|-------|------|
-| `feature-dev` | Guided feature development with codebase understanding and architecture focus. Use when building new features, implementing complex changes, or anytime you need a structured 7-phase workflow from discovery to quality review. |
-
 ### 代码质量
 
 | Skill | 描述 |
 |-------|------|
 | `code-simplifier` | Simplify existing code without changing intended behavior. Use when the user asks to simplify code, reduce complexity, clean up logic, remove duplication, shrink a function, make implementation more direct, or review recent changes for unnecessary abstractions. |
-| `karpathy-guidelines` | Behavioral guidelines to reduce common LLM coding mistakes. Use when writing, reviewing, or refactoring code to avoid overcomplication, make surgical changes, surface assumptions, and define verifiable success criteria. |
-| `verification-before-completion` | Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output before making any success claims; evidence before assertions always |
 
 ### 调试与测试
 
@@ -43,14 +35,11 @@ git clone https://github.com/deprive-Wang/skills-backup.git ~/.cc-switch/skills
 |-------|------|------|
 | `systematic-debugging` | Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes |  |
 | `tdd` | Test-driven development with red-green-refactor loop. Use when user wants to build features or fix bugs using TDD, mentions "red-green-refactor", wants integration tests, or asks for test-first development. | 保留版本；强调行为测试和垂直切片 |
-| `webapp-testing` | Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs. |  |
 
 ### 文档生成
 
 | Skill | 描述 | 备注 |
 |-------|------|------|
-| `doc` | Use when the task involves reading, creating, or editing `.docx` documents, especially when formatting or layout fidelity matters; prefer `python-docx` plus the bundled `scripts/render_docx.py` for visual checks. |  |
-| `pdf` | Use when tasks involve reading, creating, or reviewing PDF files where rendering and layout matter; prefer visual checks by rendering pages (Poppler) and use Python tools such as `reportlab`, `pdfplumber`, and `pypdf` for generation and extraction. |  |
 | `ppt-master` | AI-driven multi-format SVG content generation system. Converts source documents (PDF/DOCX/URL/Markdown) into high-quality SVG pages and exports to PPTX through multi-role collaboration. Use when user asks to "create PPT", "make presentation", "生成PPT", "做PPT", "制作演示文稿", or mentions "ppt-master". |  |
 | `Visiomaster` | Windows-first Visio diagram reconstruction workflow for flowcharts, architecture diagrams, and paper-style module figures. Reuses ppt-master style analysis and composition discipline on the front half, but outputs editable Visio .vsdx plus exported .svg and .png through a scene.json to Visio pipeline. Use when the user wants a diagram recreated as editable Visio shapes instead of a pasted screenshot or PPT-only result. |  |
 | `skills/common/markitdown` | Convert files and office documents to Markdown. Supports PDF, DOCX, PPTX, XLSX, images (with OCR), audio (with transcription), HTML, CSV, JSON, XML, ZIP, YouTube URLs, EPubs and more. | 通用转换工具 |
@@ -74,14 +63,7 @@ git clone https://github.com/deprive-Wang/skills-backup.git ~/.cc-switch/skills
 
 | Skill | 描述 |
 |-------|------|
-| `notion-research-documentation` | Research across Notion and synthesize into structured documentation; use when gathering info from multiple Notion sources to produce briefs, comparisons, or reports with citations. |
 | `storage-analyzer` | macOS / Windows 只读存储分析助手（自动识别系统）。扫描整机磁盘占用，找出 占空间大户，把每一项分成 🟢可自动清理 / 🟡需人工判断 / 🔴谨慎清理 三级并给出 可执行处置方案，生成排版精美、可折叠、命令可一键复制的交互式 HTML 报告，并可 起本地服务在网页上一键删除（移废纸篓/直接删）。扫描全程只读。务必在以下场景 使用：用户说"存储分析""磁盘满了""C盘/硬盘满了""空间不够""清理空间" "清理磁盘""占空间""哪些东西占地方""帮我看看存储""看一下电脑存储/空间" "存储空间""电脑空间不够""内存满了/不够/不足""看下内存/存储"（中文口语里 "内存"常指存储空间）"storage analysis""disk cleanup""清缓存""磁盘清理"； 或用户抱怨电脑没空间、想知道什么东西吃硬盘、想要清理建议时。注意：若用户明确 指运行内存/RAM（如"哪个进程吃内存""内存占用高"想看活动监视器），那是 RAM 不是存储，不属于本 skill。 |
-
-### 项目初始化
-
-| Skill | 描述 | 备注 |
-|-------|------|------|
-| `codex-project-onboarding` | 首次打开项目时读取并创建或刷新根目录 `codex.md` 摘要。当用户希望 Codex 理解新代码库、生成项目简报、总结架构、记录启动命令或为后续会话创建入门笔记时使用。 | Codex 专用 |
 
 ### 辅助工具
 
@@ -99,7 +81,6 @@ git clone https://github.com/deprive-Wang/skills-backup.git ~/.cc-switch/skills
 |------|-----------|------|
 | 调试与 TDD | `systematic-debugging` / `tdd` | 分别负责根因调试与测试驱动开发 |
 | 科研展示 | `ppt-master` / `Visiomaster` | 分别负责 PPT 与可编辑 Visio 图 |
-| 文档处理 | `doc` / `pdf` | 分别负责 DOCX 与 PDF |
 
 ---
 
@@ -118,10 +99,12 @@ git clone https://github.com/deprive-Wang/skills-backup.git ~/.cc-switch/skills
 
 ```bash
 cd ~/.cc-switch/skills
-git add <明确的 Skill 路径> README.md generate_readme.py
+git add <明确的 Skill 路径> README.md
 git commit -m "更新: <skill名> -- <简述>"
 git push
 ```
+
+新增、删除或调整 Skill 后，手动同步维护上方分类索引和数量。
 
 ### 新电脑恢复
 
@@ -132,4 +115,4 @@ git clone https://github.com/deprive-Wang/skills-backup.git ~/.cc-switch/skills
 
 ---
 
-> README.md 由 `generate_readme.py` 自动生成，共收录 21 个 Skill。
+> README.md 手动维护，当前共收录 13 个 Skill。
